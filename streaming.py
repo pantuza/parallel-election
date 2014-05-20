@@ -14,15 +14,14 @@ import psycopg2
 from datetime import datetime
 
 
-# Go to http://dev.twitter.com and create an app.
-# The consumer key and secret will be generated for you after
-consumer_key="hWN0t88Tj0sNuhZ25mXDxgVFD"
-consumer_secret="CZ2clwPD8ndNnDRMZGoGkpWCboqYxx2IcC1mfPqEO5q1QNLB0v"
+#
+# Insert here your own twitter API credential
+#
+consumer_key="MY_TWITTER_CONSUMER_KEY"
+consumer_secret="MY_TWITTER_CONSUMER_SECRET"
 
-# After the step above, you will be redirected to your app's page.
-# Create an access token under the the "Your access token" section
-access_token="192064967-IKdTvcH0b847V738owAKhvRC9riXGBUnZ122RMc4"
-access_token_secret="DZxqNQCCYqqOoHpXGbh4NkWx47r05MhQ0GYpqvABgphtT"
+access_token="MY_TWITTER_ACCESS_TOKEN"
+access_token_secret="MY_TWITTER_ACCESS_TOKEN_SECRET"
 
 
 # logging
@@ -36,7 +35,8 @@ tweets_log.write('\n\n*** Starting logging at: %s ***\n\n' % log_start)
 def insert(user, tweet):
     
     try:
-        conn_string = "dbname='eleito' user='eleito' password='eleito'"
+        # Insert the database password
+        conn_string = "dbname='eleito' user='eleito' password='MY_PASSWORD'"
         conn=psycopg2.connect(conn_string)
     except:
         pg_log.write("Unable to connect to the database.\n")
@@ -63,18 +63,23 @@ def insert(user, tweet):
 
 
 
-class StdOutListener(StreamListener):
+class TweetListener(StreamListener):
     """ A listener handles tweets are the received from the stream.
     This is a basic listener that just prints received tweets to stdout.
 
     """
     def on_data(self, data):
+        
+        # Loads tweet data
         data = json.loads(data)
         user = data['user']
         tweet = data['text']
         
+        # Insert tweet on database
         insert(user, tweet)
+
         try:
+            # write to log file
             tweets_log.write("Person: %s - @%s\nFrom: %s\nTweet: %s\n" 
                              % (user['name'], user['screen_name'], 
                                 user['location'],tweet))
@@ -82,17 +87,20 @@ class StdOutListener(StreamListener):
             pass
         except UnicodeDecodeError:
             pass
+
         return True
 
     def on_error(self, status):
         print status
 
 if __name__ == '__main__':
-    l = StdOutListener()
+
+    listener = TweetListener()
+    
     auth = OAuthHandler(consumer_key, consumer_secret)
     auth.set_access_token(access_token, access_token_secret)
 
-    stream = Stream(auth, l)
+    stream = Stream(auth, listener)
     track_list = ['dilma','aecio','eduardo campos',
                   'Dilma Rousseff', u'Aécio Neves', 'Eduardo Campos',
                   u'eleições 2014']
