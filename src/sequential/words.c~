@@ -64,7 +64,7 @@ void print_words(words *dict)
 }
 
 
-int word_value_la(words *dict, char *word)
+int word_value_l(words *dict, char *word)
 {
 	int i;
 	
@@ -74,7 +74,7 @@ int word_value_la(words *dict, char *word)
 	return 0;
 }
 
-int word_value_sa(words *dict, char *word)
+int word_value_bo(words *dict, char *word)
 {
 	int factor, pos, last;
 
