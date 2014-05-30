@@ -1,10 +1,20 @@
-#include "palavras.h"
-#define SMAX 512 //Tamanho máximo da string
+#ifndef SENTMENT_ANALYSER_H
+#define SENTMENT_ANALYSER_H
 
-int analisar(palavras *dicionario, char *frase,FILE *out);
+
+#include "words.h"
+
+
+#define SMAX 512 /* maximum size of strings  */
+
+
+int analyse(words *dict, char *string, FILE *out);
+
 /*
 	Analisa uma frase e devolve a polaridade:
 		Quanto mais distante de 0 negativamente, mais negativo é o sentimento
 		Quanto mais distante de 0 positivamente, mais positivo é o sentimento	 
 	Se o arquivo "out" for válido, ele imprimirá as palavras não encontradas no dicionário
 */
+
+#endif /* SENTMENT_ANALYSER_H */

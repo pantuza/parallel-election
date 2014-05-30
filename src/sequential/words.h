@@ -1,36 +1,43 @@
-#ifndef _PALAVRAS
+#ifndef WORDS_H
+#define WORDS_H
+
+
 #include <stdio.h>
 #include <stdlib.h>
-#define _PALAVRAS
 
-#define PMAX 32	//Tamanho máximo da palavra
 
-typedef struct palavra{
+#define PMAX 32	/* maximum size of a word */
+
+
+typedef struct word {
 	char string[PMAX];
 	int  valor;
-}palavra;
+} word;
 
-typedef struct palavras{
-	palavra *p;
+
+typedef struct words {
+	word *p;
 	int n;
+} words;
 
-}palavras;
 
-palavras *carregar_palavras(FILE *in);
-// Carrega todas as palavras do arquivo "in" e devolve em "*palavras"
+/* Load all words from 'in' and appends to 'words' */
+words *load_words(FILE *in);
 
-int comparar_palavra(char *p1,char *p2);
-/*
-	Compara duas palavras e devolve:
-	-1 se p1>p2
-	1 se p1<p2
-	0 se p1 == p2
+
+/**
+	Compare two words and returns:
+	-1 if p1 > p2
+	1 if p1 < p2
+	0 if p1 == p2
 */
+int compare(char *p1,char *p2);
 
-// Procura a palavra em "dicionario" e devolve a polaridade ou 0 caso não encontre:
-int valor_palavra_l(palavras *dicionario, char *palavra);	//de forma linear
-int valor_palavra_bo(palavras *dicionario, char *palavra);	//de forma ordenada, complexidade logaritma
 
-void imprime_palavras(palavras *dicionario);
+// Search the word in dict and returns its polarity or 0 case not found
+int word_value_l(words *dict, char *word);	// linear approach
+int word_value_bo(words *dict, char *word);	// sorted approach (logarithmic)
 
-#endif
+void print_words(words *dict);
+
+#endif /* WORDS_H */

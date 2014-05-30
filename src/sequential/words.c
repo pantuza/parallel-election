@@ -1,24 +1,30 @@
-#include "palavras.h"
+#include "words.h"
 
-int contar_palavras(FILE *in)
+
+int word_count(FILE *in)
 {
 	char string[1024];
-	int q=0;
+	int q = 0;
 
-	while(fscanf(in,"%s %s",string,string) ==2)q++;
-	rewind(in);
+	while (fscanf(in, "%s %s", string, string) == 2)
+        q++;
+	
+    rewind(in);
 	return q;
 }
 
-int comparar_palavra(char *p1,char *p2)
+
+int compare(char *p1, char *p2)
 {
 	int i;
 	
-	for(i=0;i<PMAX;i++)
+	for (i = 0; i < PMAX; i++)
 	{
-		if(p1[i] == '\0' && p1[i] == '\0')return 0;
-		if(p1[i] == p2[i])continue;
-		if(p1[i] > p2[i])
+		if (p1[i] == '\0' && p1[i] == '\0') 
+            return 0;
+		if (p1[i] == p2[i])
+            continue;
+		if (p1[i] > p2[i])
 			return -1;
 		else
 			return 1;
@@ -26,71 +32,80 @@ int comparar_palavra(char *p1,char *p2)
 	return 0;
 }
 
-palavras *carregar_palavras(FILE *in)
+
+words *load_words(FILE *in)
 {
-	palavras *dicionario;
-	int i,j;
+	words *dict;
+	int i, j;
 
-	dicionario = malloc(sizeof(palavras));
-	dicionario->n=contar_palavras(in);
-	dicionario->p=calloc(dicionario->n,sizeof(palavra));
-	for(i=0;(i<(dicionario->n)) && (!feof(in));i++)
+	dict = malloc(sizeof(words));
+	dict->n = word_count(in);
+	dict->p = calloc(dict->n, sizeof(word));
+	
+    for(i = 0; (i < (dict->n)) && (!feof(in)); i++)
 	{
-		fscanf(in,"%d %s",&(dicionario->p[i].valor), dicionario->p[i].string);
-		for(j=0;j<PMAX && dicionario->p[i].string[j] != '\0' ;j++)	//Transforma tudo pra minusculo 
-		if(dicionario->p[i].string[j]<91 && dicionario->p[i].string[j]>64)
-				dicionario->p[i].string[j]+=32;
+		fscanf(in, "%d %s", &(dict->p[i].valor), dict->p[i].string);
+        
+        /* Turn everything into lower case */
+		for(j = 0; j < PMAX && dict->p[i].string[j] != '\0'; j++)
+		
+        if(dict->p[i].string[j] < 91 && dict->p[i].string[j] > 64)
+				dict->p[i].string[j] += 32;
 	}
-	return dicionario;
-
+	return dict;
 }
 
-void imprime_palavras(palavras *dicionario)
+
+void print_words(words *dict)
 {
 	int i;
-	for(i=0;i<(dicionario->n);i++)
-		printf("%d %s\n",dicionario->p[i].valor, dicionario->p[i].string);
-	return;
+	for (i = 0; i < (dict->n); i++)
+		fprintf(stdout, "%d %s\n", dict->p[i].valor, dict->p[i].string);
 }
 
-int valor_palavra_l(palavras *dicionario, char *palavra)
+
+int word_value_l(words *dict, char *word)
 {
 	int i;
 	
-	for(i=0;i<(dicionario->n);i++)
-		if(!comparar_palavra(dicionario->p[i].string,palavra))return dicionario->p[i].valor;
+	for(i = 0; i < (dict->n); i++)
+		if(!compare(dict->p[i].string, word))
+            return dict->p[i].valor;
 	return 0;
 }
 
-int valor_palavra_bo(palavras *dicionario, char *palavra)
+int word_value_bo(words *dict, char *word)
 {
-	int fator,pos,last;
+	int factor, pos, last;
 
-	pos=(dicionario->n) - 1;
-	fator=pos;
+	pos = (dict->n) - 1;
+	factor = pos;
 	last = 0;
-	while((pos>0) && (pos<(dicionario->n)))
+
+	while((pos > 0) && (pos < (dict->n)))
 	{
-		if(fator != 1)fator=fator/2;
-		switch(comparar_palavra(dicionario->p[pos].string,palavra))
+		if(factor != 1)
+            factor = factor / 2;
+
+		switch(compare(dict->p[pos].string, word))
 		{
 			case -1:
-				if(fator == 1)
+				if(factor == 1)
 				{
-					if(last == 1)return 0;
+					if(last == 1) return 0;
 					last =-1;
 				}
-				pos-=fator;
+				pos -= factor;
 				break;
 			case 0:
-				return dicionario->p[pos].valor;
+				return dict->p[pos].valor;
 			case 1:
-			if(fator == 1)
+		    	if(factor == 1)
 				{
-					if(last == -1)return 0;
-					last =1;
+					if(last == -1) return 0;
+					last = 1;
 				}
-				pos+=fator;
+				pos += factor;
 		}
 	}
 	return 0;	

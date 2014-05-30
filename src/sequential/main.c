@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
 	}
 
 	
-    dict=carregar_palavras(in);
+    dict=load_words(in);
 	while (1)
 	{
 		fprintf(stdout, "\nEnter a phrase or 0 for exit.\nPhrase: ");
