@@ -1,25 +1,41 @@
-#include "palavras.h"
-#include "analisador_sentimentos.h"
+#include <stdio.h>
 
-int main(int argc,char *argv[])
+
+#include "words.h"
+#include "sentiment_analyser.h"
+
+
+int main(int argc, char *argv[])
 {
 	FILE *in,*out;
-	palavras *dicionario;
+
+	words *dict;
 	char string[256];
 	
-	in=fopen(argv[1],"r");
-	out=fopen(argv[2],"w");
-	if(!in)
+	in = fopen(argv[1], "r");
+	out = fopen(argv[2], "w");
+	
+    
+    if (!in)
 	{
-		puts("Um arquivo de dicionario deve ser passado como parametro");
-		return 0;
+		fprintf(stdout, "A dictionary file must be passed\n");
+		return EXIT_FAILURE;
 	}
-	dicionario=carregar_palavras(in);
-	while(1)
+
+	
+    dict=carregar_palavras(in);
+	while (1)
 	{
-		printf("\nEntre com a frase ou 0 para sair\nFrase: ");
-		fgets(string,256,stdin);
-		if(string[0]=='0')return 0;
-		printf("Polaridade da frase: %d\n",analisar(dicionario, string, out));
+		fprintf(stdout, "\nEnter a phrase or 0 for exit.\nPhrase: ");
+		fgets(string, 256, stdin);
+
+		if(string[0] == '0') 
+            return EXIT_SUCCESS;
+
+
+		fprintf(stdout, "polarity of the sentence: %d\n",
+                analyse(dict, string, out));
 	}
+
+    return EXIT_SUCCESS;
 }
