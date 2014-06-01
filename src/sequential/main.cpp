@@ -20,12 +20,17 @@ int main(int argc, char *argv[])
 	}
 	in = fopen(argv[1], "r");
 //Load tweets
+	cout <<endl<< "Loading tweets...";
 	Ntweets = count_lines(in);
 	twt = new tweet[Ntweets];
 	for (i = 0; i < Ntweets; i++)
-		fgets(twt[i].t, TMAX, in);
+	{
+		twt[i].load_from_file(in);
+		//fgets(twt[i].t, TMAX, in);
+	}
 	fclose(in);
 //Load dictionary
+	cout << endl << "Loading dictionaries...";
 	in = fopen(argv[2], "r");
 	dict = new words(word_count(in));
 	dict->fload_words(in);
@@ -40,9 +45,11 @@ int main(int argc, char *argv[])
 		candidate_tag[i]->fload_words(in);
 		fclose(in);
 	}
+//
+cout<<endl<<"computing ...";
 	result = analyse_target(dict, Ntargets, candidate_tag, Ntweets, twt);
 	for (i = 0; i < Ntargets; i++)
-		printf("Candidato: %d\n\tPositivo: %d\tNegativo: %d\n", i, result[i * 2], result[i * 2+1]);
+		printf("Candidate: %d\n\tPositive: %d\tNegative: %d\n", i, result[i * 2], result[i * 2+1]);
 	delete(dict);
 	for (i = 0; i < Ntargets; i++)
 		delete(candidate_tag[i]);

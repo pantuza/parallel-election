@@ -5,13 +5,9 @@
 
 class tweet{
 public:
-	char t[150];
+	char t[TMAX];
+	void load_from_file(FILE *in);
 };
 
 int count_lines(FILE *in);
-
 int *analyse_target(words *dict, int Ncandidates, words **candidate_tags, int Ntweet, tweet *t);
-/*
-	it analyzes tweets and returns two elements for each target in an array of results.
-	First is the sum of positive sentiments and second is the sum of negatives.
-*/

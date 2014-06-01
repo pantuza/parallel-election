@@ -49,8 +49,7 @@ void words::fload_words(FILE *in)
         
         /* Turn everything into lower case */
 		for(j = 0; j < PMAX && p[i].string[j] != '\0'; j++)
-		
-        if(p[i].string[j] < 91 && p[i].string[j] > 64)
+			if(p[i].string[j] < 91 && p[i].string[j] > 64)
 				p[i].string[j] += 32;
 	}
 	return;

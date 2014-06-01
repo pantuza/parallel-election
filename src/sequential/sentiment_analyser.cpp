@@ -4,11 +4,11 @@
 int analyse(words *dict, char *string)
 {
 	int pos,sum,i;
-	char word[PMAX];
+	char word[SMAX];
 	
 	sum=0;
 	pos=0;	//next word position in string[]
-	while(1)
+	while(pos<SMAX)
 	{
 //Insert a word from string in each iteration:
 		for(i=0;i<SMAX;i++)	
