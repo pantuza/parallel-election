@@ -1,7 +1,7 @@
 #include "words.h"
 #include "sentiment_analyser.h"
 
-int analyse(words *dict, char *string, FILE *out)
+int analyse(words *dict, char *string)
 {
 	int pos,sum,i;
 	char word[PMAX];
@@ -25,8 +25,7 @@ int analyse(words *dict, char *string, FILE *out)
 		if(word[0] == '\0')return sum;
 		word[i]='\0';
 //Analysis:
-		sum+=word_value_sa(dict,word);
-		if(out)if(!word_value_sa(dict,word))fprintf(out,"%s\n",word); 
+		sum+=dict->word_value_sa(word);
 		if(string[pos]== '\0')return sum;
 		pos++;
 	}

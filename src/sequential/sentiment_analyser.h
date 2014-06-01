@@ -5,10 +5,10 @@
 #include "words.h"
 
 
-#define SMAX 512 /* maximum size of strings  */
+#define SMAX 150 /* maximum size of strings  */
 
 
-int analyse(words *dict, char *string, FILE *out);
+int analyse(words *dict, char *string);
 
 /*
 	Analisa uma frase e devolve a polaridade:
