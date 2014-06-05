@@ -21,16 +21,6 @@ OUT_FILE="sequential_time_execution.csv";
 
 
 #
-# Prints the usage of the script
-#
-function usage ()
-{
-    echo -e "USAGE: $0 ";
-    exit 1;
-}
-
-
-#
 # Creates the output directory 
 #
 mkdir -p $OUT_DIR;
@@ -57,7 +47,7 @@ mkdir -p $OUT_DIR;
 #
 # Creates the output file with CSV headers
 #
-echo "Input,Time" > $OUT_DIR/$OUT_FILE;
+echo "Tamanho da entrada,Tempo em segundos" > $OUT_DIR/$OUT_FILE;
 
 
 #
