@@ -4,8 +4,10 @@
 #include "words.h"
 #include "sentiment_analyser.h"
 #include "tweet_target_analyser.h"
-#define	NTHREADS	8
-#define BLOCKSIZE	4096000
+
+
+#define	NTHREADS	4
+#define BLOCKSIZE	2048000
 
 using namespace std;
 
