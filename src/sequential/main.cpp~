@@ -4,7 +4,7 @@
 #include "words.h"
 #include "sentiment_analyser.h"
 #include "tweet_target_analyser.h"
-#define BLOCKSIZE	1048576
+#define BLOCKSIZE	1024
 
 using namespace std;
 

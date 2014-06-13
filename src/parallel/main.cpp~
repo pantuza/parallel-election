@@ -125,6 +125,8 @@ int main(int argc, char *argv[])
 				*thread_produtor;
 	threadset *threadp;
 	float time;
+	
+	time=(float)clock()/CLOCKS_PER_SEC;
 	if (argc < 3)
 	{
 		cout <<endl<< "expected input files:"<<endl<<"./analyser <tweets> <dictionary> <target_dic1> <target_dic2> ..." << endl;
