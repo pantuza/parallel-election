@@ -12,7 +12,7 @@
 IN_DIR="input";
 FNAME='input_';
 NLINES=0;
-TIMES=1000;
+TIMES=30000;
 i=$TIMES;
 j=0;
 
