@@ -1,3 +1,13 @@
 analyser
 src/scripts/input
 src/scripts/output
+*~
+
+# windows
+*.exe
+*.pdb
+*.ilk
+*.tlog
+*.log
+*.cache
+*.obj
