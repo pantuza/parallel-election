@@ -36,12 +36,17 @@ __global__ void kernel(words *d_dict, int Ncandidates, words **candidate_tags, i
 
 	if (sentiments[threadIdx.x])
 	{
+	
+		/* Every thread waits here to compute its sentiment by candidate */
+		__syncthreads();
+		
 
 		/* Still can be parallelized */
 		for (j = 0; j < Ncandidates; j++)
 		{
 			if (analyse(candidates[j], t[index].t))
 			{
+
 				if (sentiments[threadIdx.x] > 0)
 					result[j * 2]++;
 				else
@@ -117,7 +122,8 @@ int main(int argc, char *argv[])
 int *d_result;
 int size_result = (NTargets * 2) * sizeof(int);
 cudaMalloc((void**) &d_result, size_result);
-cudaMemcpy(d_result, result, size_result, cudaMemcpyHostToDevice);
+cudaMemcpy(d_result, result, size_result, cudaMemcpyHostToDevice);
+
 
 t= new tweet[Ntweets];
 
