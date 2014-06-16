@@ -11,3 +11,4 @@ src/scripts/output
 *.log
 *.cache
 *.obj
+*.opensdf
