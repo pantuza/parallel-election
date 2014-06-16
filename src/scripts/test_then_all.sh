@@ -51,7 +51,7 @@ mkdir -p $OUT_DIR;
 # Creates the output file with CSV headers
 #
 #echo "Tamanho da entrada,Tempo em segundos" > $OUT_DIR/$OUT_FILE;
-echo "" > $OUT_DIR/$OUT_FILEi;
+echo "" > $OUT_DIR/$OUT_FILE;
 
 #
 # Runs the parallel program for each input file 
