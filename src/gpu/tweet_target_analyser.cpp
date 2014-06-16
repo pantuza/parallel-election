@@ -3,6 +3,9 @@
 
 using namespace std;
 
+
+
+
 void analyse_target(words *dict, int Ncandidates, words **candidate_tags, int Ntweet,tweet *t,int *result)
 {
 	int i,j,sentiment;
