@@ -46,11 +46,13 @@ __global__ void kernel(words *d_dict, int Ncandidates, words **candidate_tags, i
 		{
 			if (analyse(candidates[j], t[index].t))
 			{
-
+					
+				/* Increment using atomic operation */
 				if (sentiments[threadIdx.x] > 0)
-					result[j * 2]++;
+					atomicInc(&result[j * 2], 1);
 				else
-					result[j * 2+1]++;
+					atomicInc(&result[j * 2+1], 1);
+					
 			}
 		}
 	}
