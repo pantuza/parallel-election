@@ -62,7 +62,7 @@ do
     NLINES=$(wc -l $IN_DIR/$infile | cut -d' ' -f1);
     
     # Execution time of this input file
-    PAR_TIME=$(./$PAR_BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep time |cut -d' ' -f3);
+    PAR_TIME=$((echo "4"; echo "5000000") | ./$PAR_BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep Tempo |cut -d' ' -f4);
     SEQ_TIME=$(./$SEQ_BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep time |cut -d' ' -f3);
     
     # writes to outfile
