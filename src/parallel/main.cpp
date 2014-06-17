@@ -5,7 +5,7 @@
 #include "sentiment_analyser.h"
 #include "tweet_target_analyser.h"
 #define	NTHREADS	4
-#define BLOCKSIZE	1048576
+#define BLOCKSIZE	500000
 
 using namespace std;
 
@@ -148,11 +148,13 @@ int main(int argc, char *argv[])
 		candidate_tag[i] -> fload_words(in);
 		fclose(in);
 	}
+
+
 	cout<<"Entre com os valores desejados. 0 para os padrões"<<endl<<"\t-Threads"<<"\t"<<NTHREADS<<endl<<"\t-Tweets"<<"\t"<<BLOCKSIZE;
 	cout<<endl<<"Número de threads: ";
 	scanf("%d",&Nthreads);
 	if(Nthreads<1)Nthreads = NTHREADS;
-	cout<<endl<<"Tamanho do bloco de processamento: ";
+    cout<<endl<<"Tamanho do bloco de processamento: ";
 	scanf("%d",&Ntweets);
 	if(Ntweets<1)Ntweets= BLOCKSIZE;
 	in = openfile(argv[1], "r");
