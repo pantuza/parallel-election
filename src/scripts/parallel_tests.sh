@@ -18,7 +18,7 @@ C1="../../in/dilma.txt";
 C2="../../in/aecio.txt";
 C3="../../in/eduardo.txt";
 OUT_FILE="parallel_time_execution.csv";
-
+BLOCK=500000;
 
 #
 # Creates the output directory 
@@ -47,7 +47,7 @@ mkdir -p $OUT_DIR;
 #
 # Creates the output file with CSV headers
 #
-echo "Tamanho da entrada,Tempo em segundos" > $OUT_DIR/$OUT_FILE;
+echo "Entrada,2 Threads,4 Threads,8 Threads, 12 Threads" > $OUT_DIR/$OUT_FILE;
 
 
 #
@@ -59,12 +59,14 @@ do
     NLINES=$(wc -l $IN_DIR/$infile | cut -d' ' -f1);
     
     # Execution time of this input file
-    TIME=$(./$BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep time |cut -d' ' -f3);
-    
+    T0=$((echo "2"; echo $BLOCK) | ./$BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep Tempo |cut -d' ' -f4);
+    T1=$((echo "4"; echo $BLOCK) | ./$BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep Tempo |cut -d' ' -f4);
+    T2=$((echo "8"; echo $BLOCK) | ./$BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep Tempo |cut -d' ' -f4);
+    T3=$((echo "12"; echo $BLOCK) | ./$BIN $IN_DIR/$infile $DICT $C1 $C2 $C3 |grep Tempo |cut -d' ' -f4);
     # writes to outfile
-    echo "$NLINES,$TIME" >> $OUT_DIR/$OUT_FILE;
+    echo "$NLINES,$T0,$T1,$T2,$T3" >> $OUT_DIR/$OUT_FILE;
 
-    echo -e "$infile -> ($NLINES, $TIME)";
+    echo -e "$infile -> ($NLINES, $T0, $T1, $T2, $T3)";
 done;
 
 echo -e "Result file placed at $OUT_DIR/$OUT_FILE";
